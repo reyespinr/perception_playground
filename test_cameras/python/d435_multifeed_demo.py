@@ -10,8 +10,10 @@ config = rs.config()
 # Configure the IR streams of the D435
 config.enable_stream(rs.stream.color, 1280, 720, rs.format.bgr8, 30)
 config.enable_stream(rs.stream.depth, 1280, 720, rs.format.z16, 30)
-config.enable_stream(rs.stream.infrared, 1, 1280, 720, rs.format.y8, 30)  # left IR camera
-config.enable_stream(rs.stream.infrared, 2, 1280, 720, rs.format.y8, 30)  # right IR camera
+config.enable_stream(rs.stream.infrared, 1, 1280, 720,
+                     rs.format.y8, 30)  # left IR camera
+config.enable_stream(rs.stream.infrared, 2, 1280, 720,
+                     rs.format.y8, 30)  # right IR camera
 
 # Start the pipeline
 pipeline.start(config)
@@ -30,13 +32,14 @@ try:
         # Convert images to numpy arrays
         color_image = np.asanyarray(color_frame.get_data())
         depth_image = np.asanyarray(depth_frame.get_data())
-        
+
         # Convert the IR frames to numpy arrays for visualization
         ir_image_left = np.asanyarray(ir_frame_left.get_data())
         ir_image_right = np.asanyarray(ir_frame_right.get_data())
-        
+
         # Apply colormap on depth image
-        depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
+        depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(
+            depth_image, alpha=0.03), cv2.COLORMAP_JET)
 
         # Display all images
         cv2.imshow('Color Feed', color_image)
