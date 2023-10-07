@@ -1,2 +1,2 @@
 import pyrealsense2 as rs
-print(rs.__version__)
+print(f'RealSense Version: {rs.__version__}')

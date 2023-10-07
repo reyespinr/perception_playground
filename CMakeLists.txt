@@ -29,7 +29,11 @@ macro(add_camera_test test_name)
 endmacro()
 
 # Add the executables
-add_camera_test(t265_demo)
 add_camera_test(check_version)
+add_camera_test(d435_demo)
+add_camera_test(d435_full_demo)
+add_camera_test(d435_ir_demo)
+add_camera_test(dual_camera_demo)
+add_camera_test(t265_demo)
 
 # Add other tests using the macro as you create them
