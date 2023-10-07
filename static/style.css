@@ -1,0 +1,286 @@
+/* General Styles */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #36393f;
+    color: #dcddde;
+    font-family: 'Nunito', sans-serif;
+}
+
+a {
+    color: #7289da;
+}
+
+a:hover {
+    color: #b9bbbe;
+}
+
+/* Camera Selection & Feed */
+.dropdown-button-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+select {
+    width: 53%;
+    padding: 10px 15px;
+    background-color: #2C2F33;
+    color: #FFF;
+    border: 2px solid #4E5D94;
+    border-radius: 5px;
+    font-size: 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #7289DA;
+    color: #FFF;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #5B6EAD;
+}
+
+/* Flexbox for Camera Container */
+.camera-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Controls Container */
+.controls-container {
+    margin-top: -50px;
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+}
+
+/* Left Controls: WASD & Movement Joystick */
+.left-controls {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.keys-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.key-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.key {
+    padding: 10px 20px;
+    border: 1px solid #333;
+    text-align: center;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.key.active {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+.joystick-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border: 3px solid #333;
+    border-radius: 50%;
+    margin-top: 0px;
+}
+
+.joystick-stick {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: #6f00ff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Right Controls: XYAB & Camera Joystick */
+.right-controls {
+    margin-top: 140px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.xyab-container {
+    position: relative;
+    width: 120px; 
+    height: 120px; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    top: -80px;
+    left: -30px; 
+}
+
+.xyab-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.button {
+    width: 40px; 
+    height: 40px; 
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    position: relative;
+}
+
+.button.active {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+#buttonX {
+    left: -20px; 
+    top: 10px; 
+}
+
+#buttonB {
+    left: 20px;  
+    top: 10px; 
+}
+
+#buttonY {
+    left: 0px; 
+    top:  10px;
+}
+
+#buttonA {
+    left: 0px;   
+    top: 0px;  
+}
+
+#cameraStick {
+    top: 50%;
+    left: 50%;
+}
+
+@keyframes rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+#videoFeed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #FFF;
+    font-size: 16px;
+    justify-content: flex-start; 
+}
+
+#videoFeed[data-loading="true"] {
+    background-color: #2C2F33;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: space-between;
+    position: relative;
+}
+
+#videoFeed[data-loading="true"]::before {
+    content: ' ';
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    border: 5px solid #36393f;
+    border-top: 5px solid #7289DA;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    line-height: 45px;
+    text-align: center;
+    animation: rotate 2s linear infinite;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Login Page Styles */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #2C2F33;
+    border: 1px solid #4E5D94;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #FFF;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #36393f;
+    color: #dcddde;
+    border: 1px solid #4E5D94;
+    border-radius: 3px;
+}
+
+.login-container input[type="submit"] {
+    width: 50%;
+    padding: 10px 0;
+    background-color: #7289DA;
+    color: #FFF;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container input[type="submit"]:hover {
+    background-color: #5B6EAD;
+}
+
+.submit-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top
+    : 10px;
+}

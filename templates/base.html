@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Camera Viewer{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  
+</head>
+<body>
+   
+    {% block content %}
+    <!-- This is where the content of child templates will be rendered. -->
+    {% endblock %}
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
