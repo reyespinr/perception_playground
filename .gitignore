@@ -158,3 +158,89 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# Custom additions
+
+# some build files are not easily distinguished, so let's ignore the whole directory
+build
+
+# cmake-file-api files generated in the project build directory
+**/.cmake/api
+
+# Ninja build files not covered by GitHub Ninja.gitignore reference
+*.ninja
+
+
+# Covers Visual Studio Code (VS Code)
+# Reference: https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/c_cpp_properties.json
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+
+
+# Covers C++
+# Reference: https://github.com/github/gitignore/blob/main/C%2B%2B.gitignore
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+
+# Covers CMake
+# Reference: https://github.com/github/gitignore/blob/main/CMake.gitignore
+
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+
+# Covers Ninja
+# Reference: https://github.com/github/gitignore/blob/main/Global/Ninja.gitignore
+
+.ninja_deps
+.ninja_log
