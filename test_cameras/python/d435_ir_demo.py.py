@@ -7,8 +7,10 @@ pipeline = rs.pipeline()
 config = rs.config()
 
 # Configure the IR streams of the D435
-config.enable_stream(rs.stream.infrared, 1, 1280, 720, rs.format.y8, 30)  # left IR camera
-config.enable_stream(rs.stream.infrared, 2, 1280, 720, rs.format.y8, 30)  # right IR camera
+config.enable_stream(rs.stream.infrared, 1, 1280, 720,
+                     rs.format.y8, 30)  # left IR camera
+config.enable_stream(rs.stream.infrared, 2, 1280, 720,
+                     rs.format.y8, 30)  # right IR camera
 
 # Start the pipeline
 pipeline.start(config)

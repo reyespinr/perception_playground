@@ -1,6 +1,7 @@
 import pyzed.sl as sl
 import cv2
 
+
 def main():
     # Create a Camera object
     zed = sl.Camera()
@@ -21,7 +22,7 @@ def main():
         if zed.grab(sl.RuntimeParameters()) == sl.ERROR_CODE.SUCCESS:
             # Retrieve the left image
             zed.retrieve_image(image, sl.VIEW.LEFT)
-            
+
             # Convert the image to a format that can be displayed with OpenCV
             img_cv2 = image.get_data()
 
@@ -32,6 +33,7 @@ def main():
 
     # Close the camera
     zed.close()
+
 
 if __name__ == "__main__":
     main()

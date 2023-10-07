@@ -23,7 +23,8 @@ try:
         depth_image = np.asanyarray(depth_frame.get_data())
 
         # Apply colormap on depth image
-        depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
+        depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(
+            depth_image, alpha=0.03), cv2.COLORMAP_JET)
 
         # Display both images
         cv2.imshow('Color Feed', color_image)
