@@ -171,13 +171,6 @@ build
 *.ninja
 
 
-# Covers Visual Studio Code (VS Code)
-# Reference: https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
-
-.vscode/*
-!.vscode/settings.json
-!.vscode/c_cpp_properties.json
-
 # Local History for Visual Studio Code
 .history/
 
