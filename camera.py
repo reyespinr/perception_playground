@@ -3,6 +3,7 @@ import numpy as np
 import threading
 import cv2
 
+
 class Camera:
     FEEDS = {
         'Intel RealSense D435': ['Color', 'Depth', 'Infrared1', 'Infrared2'],
@@ -25,20 +26,24 @@ class Camera:
                 profile = self.pipeline.start(self.config)
                 if profile:
                     self.pipeline_started = True
-                    print(f"Started pipeline for serial number: {self.serial_number}")
+                    print(
+                        f"Started pipeline for serial number: {self.serial_number}")
                 else:
-                    print(f"Failed to start pipeline for serial number: {self.serial_number}")
+                    print(
+                        f"Failed to start pipeline for serial number: {self.serial_number}")
 
     def stop(self):
         with self.lock:
             if self.pipeline_started:
                 self.pipeline.stop()
                 self.pipeline_started = False
-                print(f"Stopped pipeline for serial number: {self.serial_number}")
+                print(
+                    f"Stopped pipeline for serial number: {self.serial_number}")
 
     def get_frame(self, feed_type='Color'):
         if not self.pipeline_started:
-            print(f"Pipeline for serial {self.serial_number} is not started. Attempting to start now.")
+            print(
+                f"Pipeline for serial {self.serial_number} is not started. Attempting to start now.")
             self.start()
 
         try:
@@ -52,11 +57,11 @@ class Camera:
                 depth_frame = frames.get_depth_frame()
                 depth_image = np.asanyarray(depth_frame.get_data())
                 return cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
-            
+
             elif feed_type == 'Infrared1' and self.device_name == 'Intel RealSense D435':
                 ir_frame_lef = frames.get_infrared_frame(1)
                 return np.asanyarray(ir_frame_lef.get_data())
-            
+
             elif feed_type == 'Infrared2' and self.device_name == 'Intel RealSense D435':
                 ir_frame_right = frames.get_infrared_frame(2)
                 return np.asanyarray(ir_frame_right.get_data())
@@ -70,24 +75,33 @@ class Camera:
                 return np.asanyarray(fisheye2_frame.get_data())
 
             else:
-                print(f"Unsupported feed type {feed_type} for serial number: {self.serial_number}. Available feeds for the device are: {self.possible_feeds}")
+                print(
+                    f"Unsupported feed type {feed_type} for serial number: {self.serial_number}. Available feeds for the device are: {self.possible_feeds}")
                 return None
 
         except Exception as e:
-            print(f"Error fetching frame for serial number {self.serial_number}: {e}")
+            print(
+                f"Error fetching frame for serial number {self.serial_number}: {e}")
             return None
 
     def setup_config(self):
         self.config.enable_device(self.serial_number)
         if self.device_name == 'Intel RealSense D435':
-            self.config.enable_stream(rs.stream.color, 1280, 720, rs.format.bgr8, 30)
-            self.config.enable_stream(rs.stream.depth, 1280, 720, rs.format.z16, 30)
-            self.config.enable_stream(rs.stream.infrared, 1, 1280, 720, rs.format.y8, 30)
-            self.config.enable_stream(rs.stream.infrared, 2, 1280, 720, rs.format.y8, 30)
+            self.config.enable_stream(
+                rs.stream.color, 848, 480, rs.format.bgr8, 30)
+            self.config.enable_stream(
+                rs.stream.depth, 848, 480, rs.format.z16, 30)
+            self.config.enable_stream(
+                rs.stream.infrared, 1, 848, 480, rs.format.y8, 30)
+            self.config.enable_stream(
+                rs.stream.infrared, 2, 848, 480, rs.format.y8, 30)
 
         elif self.device_name == 'Intel RealSense T265':
-            self.config.enable_stream(rs.stream.fisheye, 1, 848, 800, rs.format.y8, 30)
-            self.config.enable_stream(rs.stream.fisheye, 2, 848, 800, rs.format.y8, 30)
+            self.config.enable_stream(
+                rs.stream.fisheye, 1, 848, 800, rs.format.y8, 30)
+            self.config.enable_stream(
+                rs.stream.fisheye, 2, 848, 800, rs.format.y8, 30)
+
 
 class CameraManager:
     def __init__(self):
