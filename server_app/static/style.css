@@ -131,14 +131,14 @@ button:hover {
 
 .xyab-container {
     position: relative;
-    width: 120px; 
-    height: 120px; 
+    width: 120px;
+    height: 120px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
     top: -80px;
-    left: -30px; 
+    left: -30px;
 }
 
 .xyab-row {
@@ -148,8 +148,8 @@ button:hover {
 }
 
 .button {
-    width: 40px; 
-    height: 40px; 
+    width: 40px;
+    height: 40px;
     text-align: center;
     line-height: 40px;
     border: 1px solid #333;
@@ -163,23 +163,23 @@ button:hover {
 }
 
 #buttonX {
-    left: -20px; 
-    top: 10px; 
+    left: -20px;
+    top: 10px;
 }
 
 #buttonB {
-    left: 20px;  
-    top: 10px; 
+    left: 20px;
+    top: 10px;
 }
 
 #buttonY {
-    left: 0px; 
-    top:  10px;
+    left: 0px;
+    top: 10px;
 }
 
 #buttonA {
-    left: 0px;   
-    top: 0px;  
+    left: 0px;
+    top: 0px;
 }
 
 #cameraStick {
@@ -188,13 +188,23 @@ button:hover {
 }
 
 @keyframes rotate {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
 
 @keyframes rotate {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
 
 #videoFeed {
@@ -203,14 +213,14 @@ button:hover {
     align-items: center;
     color: #FFF;
     font-size: 16px;
-    justify-content: flex-start; 
+    justify-content: flex-start;
 }
 
 #videoFeed[data-loading="true"] {
     background-color: #2C2F33;
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     justify-content: space-between;
     position: relative;
 }
@@ -281,6 +291,11 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top
-    : 10px;
+    margin-top: 10px;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 10px;
 }

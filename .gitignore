@@ -237,3 +237,5 @@ _deps
 
 .ninja_deps
 .ninja_log
+
+.vscode/settings.json
