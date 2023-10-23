@@ -1,12 +1,11 @@
 from fastapi import FastAPI, Depends, HTTPException, Form, Request
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, RedirectResponse, Response
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from models import User, UserRole, Base
 from security import get_password_hash, verify_password, create_access_token, get_current_user, NotAuthenticatedException
-from database import SessionLocal, engine
-from typing import Union
+from database import engine
 from dependencies import get_db
 
 
@@ -21,6 +20,7 @@ templates = Jinja2Templates(directory="templates")
 def read_root(request: Request, db: Session = Depends(get_db)):
     try:
         current_user = get_current_user(request, db)
+        print(f"Welcome user {current_user}!")
         feeds = [("serial1", "Camera 1 - Color"),
                  ("serial2", "Camera 2 - Depth")]
         return templates.TemplateResponse("index.html", {"request": request, "feeds": feeds})

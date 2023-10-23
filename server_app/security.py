@@ -6,7 +6,6 @@ from fastapi.security import OAuth2PasswordBearer
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from models import User
-from database import SessionLocal
 from dependencies import get_db
 
 
@@ -18,11 +17,8 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
-credentials_exception = HTTPException(
-    status_code=401, detail="Could not validate credentials")
 
-
-class JWTError(Exception):
+class NotAuthenticatedException(Exception):
     pass
 
 
@@ -47,13 +43,8 @@ def decode_access_token(token: str):
     # print(f"Decoding token: {token}")  # Debug line
     try:
         return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-    except Exception as e:  # Continue catching all exceptions
-        print(f"Exception during token decoding: {e}")  # Debug line
-        raise JWTError
-
-
-class NotAuthenticatedException(Exception):
-    pass
+    except Exception as e:
+        raise e
 
 
 def get_current_user(request: Request, db: Session = Depends(get_db)):
@@ -76,7 +67,7 @@ def get_current_user(request: Request, db: Session = Depends(get_db)):
         return user
 
     except Exception as e:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+        raise e
 
 
 def ensure_logged_in(token: str = Cookie(None)):
