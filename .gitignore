@@ -1,3 +1,8 @@
+#ROS STUFF
+
+n1x_ws/build
+n1x_ws/install
+n1x_ws/log
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
