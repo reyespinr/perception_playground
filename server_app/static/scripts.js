@@ -181,6 +181,19 @@ function checkGamepad() {
         }
 
         handleJoystickMovement(gp.axes[1], gp.axes[2]); // Adjusted for left joystick (y-axis) for forward/backward and right joystick (x-axis) for left/right
+        let leftJoyElement = document.getElementById('moveStick');
+        if (leftJoyElement) {
+            leftJoyElement.style.transform = `translate(-50%, -50%) translate(${gp.axes[0] * 40}px, ${gp.axes[1] * 40}px)`;
+        } else {
+            console.error(`${'moveStick'} element not found.`);
+        }
+        let rightJoyElement = document.getElementById('cameraStick');
+        if (rightJoyElement) {
+            rightJoyElement.style.transform = `translate(-50%, -50%) translate(${gp.axes[2] * 40}px, ${gp.axes[3] * 40}px)`;
+        } else {
+            console.error(`${'cameraStick'} element not found.`);
+        }
+        handleGamepadButtons(gp.buttons);
     }
 }
 
@@ -200,4 +213,22 @@ function handleJoystickMovement(leftYAxis, rightXAxis) {
     }
 
     sendCommand(command);
+}
+
+function handleGamepadButtons(buttons) {
+    const buttonMappings = [
+        { id: 'buttonA', command: 'buttonA', btnIndex: 0 },
+        { id: 'buttonB', command: 'buttonB', btnIndex: 1 },
+        { id: 'buttonX', command: 'buttonX', btnIndex: 2 },
+        { id: 'buttonY', command: 'buttonY', btnIndex: 3 }
+    ];
+
+    buttonMappings.forEach(mapping => {
+        let buttonElement = document.getElementById(mapping.id);
+        if (buttons[mapping.btnIndex].pressed) {
+            buttonElement.classList.add('active');
+        } else {
+            buttonElement.classList.remove('active');
+        }
+    });
 }
