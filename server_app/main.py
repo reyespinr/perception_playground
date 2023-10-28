@@ -1,3 +1,4 @@
+import threading
 from pydantic import BaseModel
 from dependencies import get_db
 from database import engine
@@ -19,13 +20,25 @@ web_cmd_vel_publisher = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global web_cmd_vel_publisher
+
+    # Function to run ROS2 spin in a separate thread
+    def run_ros_spin():
+        rclpy.spin(web_cmd_vel_publisher)
+
     # Initialize ROS2
     rclpy.init()
     web_cmd_vel_publisher = web_cmd_pub.WebCmdVelPublisher()
+
+    # Start ROS2 spinning in a separate thread
+    ros_thread = threading.Thread(target=run_ros_spin)
+    ros_thread.start()
+
     yield
+
     # Cleanup and shutdown ROS2
     web_cmd_vel_publisher.destroy_node()
     rclpy.shutdown()
+    ros_thread.join()  # Ensure ROS2 thread has terminated
 
 
 class Command(BaseModel):
@@ -95,28 +108,10 @@ def register_user(username: str = Form(...), password: str = Form(...), role: Us
 
 @app.post("/command")
 async def handle_command(data: Command):
+    global web_cmd_vel_publisher
+    web_cmd_vel_publisher.set_command(data.direction)
     print(data)
     return {"status": "success", "message": f"Command {data} processed"}
-    # print(f"Received web command: {data.direction}")
-    # print(
-    #     f"Received web command: linear_x={data.linear_x}, angular_z={data.angular_z}")
-
-    # # Here you'll translate web commands to ROS2 understood commands.
-    # direction_to_cmd = {
-    #     'forward': 'forward',
-    #     'backward': 'backward',
-    #     'left': 'left',
-    #     'right': 'right'
-    # }
-
-    # cmd = direction_to_cmd.get(data.direction)
-    # if cmd:
-    #     web_cmd_vel_publisher.set_command(cmd)
-    #     print(f"Translated and set ROS2 command: {cmd}")
-    # else:
-    #     print(f"Command {data.direction} not recognized")
-    #     return {"status": "error", "message": f"Command {data.direction} not recognized"}
-
 
 if __name__ == "__main__":
     Base.metadata.create_all(bind=engine)

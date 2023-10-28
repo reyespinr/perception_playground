@@ -16,6 +16,7 @@ class WebCmdVelPublisher(Node):
         self.command = 'stop'
 
     def timer_callback(self):
+        # print(f"Timer callback triggered! Command: {self.command}")
         msg = Twist()
         if self.command == 'forward':
             msg.linear.x = self.get_parameter('scale_linear_x').value
