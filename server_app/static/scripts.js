@@ -1,3 +1,7 @@
+
+// Global state
+let isTurboMode = false;
+
 // ===========================
 // Key Press Logic
 // ===========================
@@ -109,30 +113,33 @@ document.addEventListener('keyup', function(event) {
 // ===========================
 // Send Command Logic
 // ===========================
+// Send Command Logic
 function sendCommand(direction) {
     console.log(`Sending command: ${direction}`);
 
-    // Convert direction to linear_x and angular_z values
+    // Define the scales based on the configuration
+    let scaleLinear = isTurboMode ? 1.0 : 0.2;
+    let scaleAngular = isTurboMode ? 1.0 : 0.5;
+
     let payload;
     switch(direction) {
         case 'forward':
-            payload = { 'linear_x': 1.0, 'angular_z': 0.0, 'direction': 'forward' };
+            payload = { 'linear_x': scaleLinear, 'angular_z': 0.0, 'direction': 'forward' };
             break;
         case 'backward':
-            payload = { 'linear_x': -1.0, 'angular_z': 0.0, 'direction': 'backward' };
+            payload = { 'linear_x': -scaleLinear, 'angular_z': 0.0, 'direction': 'backward' };
             break;
         case 'left':
-            payload = { 'linear_x': 0.0, 'angular_z': 1.0, 'direction': 'left' };
+            payload = { 'linear_x': 0.0, 'angular_z': scaleAngular, 'direction': 'left' };
             break;
         case 'right':
-            payload = { 'linear_x': 0.0, 'angular_z': -1.0, 'direction': 'right' };
+            payload = { 'linear_x': 0.0, 'angular_z': -scaleAngular, 'direction': 'right' };
             break;
         case 'stop':
         default:
             payload = { 'linear_x': 0.0, 'angular_z': 0.0, 'direction': 'stop' };
             break;
-    }
-
+    }       
     fetch("/command", {
         method: 'POST',
         headers: {
@@ -165,21 +172,28 @@ function checkGamepad() {
 
     if (gamepads[0]) {
         const gp = gamepads[0];
-        handleJoystickMovement(gp.axes[0], gp.axes[1]); // Only process movement for now
-        // We can add the turbo and other button functionality in the next phase
+
+        // Handle turbo mode
+        if (gp.buttons[4].pressed) {
+            isTurboMode = true;
+        } else if (gp.buttons[5].pressed) {
+            isTurboMode = false;
+        }
+
+        handleJoystickMovement(gp.axes[1], gp.axes[2]); // Adjusted for left joystick (y-axis) for forward/backward and right joystick (x-axis) for left/right
     }
 }
 
-function handleJoystickMovement(xAxis, yAxis) {
+function handleJoystickMovement(leftYAxis, rightXAxis) {
     let command;
 
-    if (xAxis > 0.5) {
+    if (rightXAxis > 0.5) {
         command = 'right';
-    } else if (xAxis < -0.5) {
+    } else if (rightXAxis < -0.5) {
         command = 'left';
-    } else if (yAxis > 0.5) {
+    } else if (leftYAxis > 0.5) {
         command = 'backward';
-    } else if (yAxis < -0.5) {
+    } else if (leftYAxis < -0.5) {
         command = 'forward';
     } else {
         command = 'stop';
